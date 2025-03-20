@@ -121,7 +121,7 @@ while [ $# -gt 0 ]; do
         shift
         ;;
     -P | --picker)
-        picker="$2"
+        PICKER="$2"
         shift
         shift
         ;;
