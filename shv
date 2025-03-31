@@ -4,7 +4,7 @@ OS=$(uname)
 AUTO_CD=${SHV_AUTO_CD:-"true"}
 EXT=${SHV_EXT:-"md"}
 DATE_FMT=${SHV_DATE_FMT:-"%Y-%m-%d"}
-IGNORE=${SHV_IGNORE:-"./.obsidian/* ./.git/* ./*.pdf"}
+IGNORE=${SHV_IGNORE:-'.obsidian/* .git/* *.pdf'}
 NOTE_PATH=${SHV_PATH:-${XDG_DATA_HOME:-${HOME}/.local/share}/notes}
 JOURNAL_PATH=${SHV_JOURNAL_PATH:-"$NOTE_PATH/journal"}
 PICKER=${SHV_PICKER:-"fzf -m --ansi --print-query --bind=alt-enter:print-query"}
@@ -50,10 +50,13 @@ parse() {
 
 # $1: directory
 list_files() {
+    # disable path globbing temporarily
+    set -f
     for ign in $IGNORE; do
-        tmp="$tmp -not -path $ign"
+        tmp="$tmp -not -path \"$1/$ign\""
     done
     eval "find $1 -type f $tmp"
+    set +f
 }
 
 # $1: n of days
